@@ -1,0 +1,20 @@
+# Banco de dados
+database/*.db
+
+# Logs
+logs/
+
+# Arquivos temporários
+*.log
+*.tmp
+
+# Dados do Mosquitto
+configs/mosquitto/passwd
+configs/mosquitto/*.pid
+
+# Cache
+.cache/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db

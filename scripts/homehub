@@ -1,0 +1,56 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+HOMEHUB="$HOME/Homehub/scripts"
+
+case "$1" in
+
+    start)
+        $HOMEHUB/start.sh
+        ;;
+
+    stop)
+        $HOMEHUB/stop.sh
+        ;;
+
+    restart)
+        $HOMEHUB/restart.sh
+        ;;
+
+    status)
+        $HOMEHUB/status.sh
+        ;;
+
+    logs)
+        $HOMEHUB/logs.sh
+        ;;
+
+    diagnose)
+        $HOMEHUB/diagnose.sh
+        ;;
+
+    info)
+        $HOMEHUB/info.sh
+        ;;
+
+    version)
+        $HOMEHUB/version.sh
+        ;;
+
+    storage)
+        $HOMEHUB/storage.sh
+        ;;
+    *)
+        echo "HomeHub Gateway"
+        echo ""
+        echo "Uso:"
+        echo ""
+        echo "homehub start"
+        echo "homehub stop"
+        echo "homehub restart"
+        echo "homehub status"
+	echo "homehub logs"
+	echo "homehub info"
+	echo "homehub version"
+	echo "homehub storage"
+        ;;
+esac
