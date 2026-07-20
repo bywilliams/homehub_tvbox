@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, UploadFile, File
 
 
 from app.schemas.files import (
@@ -33,5 +33,17 @@ def setup_files(homehub):
 
         return result
 
+
+    @router.post("/api/files/upload")
+    async def upload(
+        file: UploadFile = File(...)
+    ):
+
+        content = await file.read()
+
+        return homehub.files.save_file(
+            file.filename,
+            content
+        )
     
     return router

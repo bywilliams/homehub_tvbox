@@ -77,4 +77,36 @@ class FileManager:
 
         return result
 
-        
+
+    def save_file(self, filename, content):
+
+        path = self.base_path()
+
+        if not path:
+
+            return {
+                "status": "OFFLINE"
+            }
+
+
+        destination = os.path.join(
+            path,
+            filename
+        )
+
+
+        with open(
+            destination,
+            "wb"
+        ) as file:
+
+            file.write(content)
+
+
+        return {
+
+            "status": "ONLINE",
+
+            "file": filename
+
+        } 
