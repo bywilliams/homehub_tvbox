@@ -1,0 +1,70 @@
+import os
+import subprocess
+
+
+class StorageManager:
+
+    def __init__(self, config):
+
+        self.config = config
+
+        self.storage = config.load(
+            "storage.conf"
+        )
+
+
+    def info(self):
+
+        path = self.storage["storage"]["path"]
+
+        data = {
+
+            "name":
+            self.storage["storage"]["name"],
+
+            "type":
+            self.storage["storage"]["type"],
+
+            "capacity":
+            self.storage["storage"]["capacity"],
+
+            "path":
+            path,
+
+            "online":
+            os.path.exists(path)
+
+        }
+
+
+        if data["online"]:
+
+            result = subprocess.check_output(
+                ["df", "-h", path]
+            ).decode()
+
+
+            lines = result.splitlines()
+
+
+            if len(lines) >= 2:
+
+                values = lines[1].split()
+
+                data["total"] = values[1]
+                data["used"] = values[2]
+                data["free"] = values[3]
+                data["usage"] = values[4]
+
+
+        return data
+
+
+    def status(self):
+
+        if os.path.exists(
+            self.storage["storage"]["path"]
+        ):
+            return "ONLINE"
+
+        return "OFFLINE"

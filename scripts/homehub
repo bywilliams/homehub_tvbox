@@ -39,6 +39,11 @@ case "$1" in
     storage)
         $HOMEHUB/storage.sh
         ;;
+
+   	doctor)
+   	    cd $HOME/Homehub/api
+   	    python doctor.py
+   	    ;;
     *)
         echo "HomeHub Gateway"
         echo ""
@@ -52,5 +57,6 @@ case "$1" in
 	echo "homehub info"
 	echo "homehub version"
 	echo "homehub storage"
+	echo "homehub doctor"
         ;;
 esac
