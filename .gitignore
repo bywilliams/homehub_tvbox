@@ -18,3 +18,11 @@ configs/mosquitto/*.pid
 # Arquivos do sistema
 .DS_Store
 Thumbs.db
+
+# MQTT persistence
+storage/mosquitto.db
+
+
+# Python cache
+__pycache__/
+*.pyc

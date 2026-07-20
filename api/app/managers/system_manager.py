@@ -3,7 +3,7 @@ import socket
 
 class SystemManager:
 
-    def __init__(self, config):
+    def __init__(self, config, version):
 
         self.config = config
 
@@ -11,27 +11,36 @@ class SystemManager:
             "device.conf"
         )
 
-        self.version = config.load(
-            "version.conf"
-        )
+        self.version = version
 
 
     def info(self):
-
-        return {
-
-            "device":
-            self.device["device"]["name"],
-
-            "id":
-            self.device["device"]["id"],
-
-            "hardware":
-            self.device["device"]["hardware"],
-
-            "version":
-            self.version["version"]["version"],
-
-            "hostname":
-            socket.gethostname()
-        }
+        
+            version = self.version.info()
+        
+            return {
+        
+                "device":
+                    self.device["device"]["name"],
+        
+                "id":
+                    self.device["device"]["id"],
+        
+                "hardware":
+                    self.device["device"]["hardware"],
+        
+                "software":
+                    version["software"],
+        
+                "version":
+                    version["version"],
+        
+                "mode":
+                    version["mode"],
+        
+                "api_version":
+                    version["api_version"],
+        
+                "hostname":
+                    socket.gethostname()
+            }

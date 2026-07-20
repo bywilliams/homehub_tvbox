@@ -2,8 +2,9 @@ from fastapi import FastAPI
 from app.api.routes.system import setup_system
 from app.api.routes.storage import setup_storage
 from app.api.routes.mqtt import setup_mqtt
-from app.homehub import HomeHub
+from app.api.routes.info import setup_info
 from app.api.routes.health import setup_health
+from app.homehub import HomeHub
 
 def create_server():
 
@@ -38,6 +39,10 @@ def create_server():
 
     app.include_router(
         setup_mqtt(hub)
+    )
+
+    app.include_router(
+        setup_info(hub)
     )
 
 

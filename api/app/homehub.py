@@ -23,7 +23,8 @@ class HomeHub:
         )
 
         self.system = SystemManager(
-            self.config
+            config = self.config,
+            version = self.version
         )
 
         self.storage = StorageManager(
