@@ -4,6 +4,7 @@ from app.api.routes.storage import setup_storage
 from app.api.routes.mqtt import setup_mqtt
 from app.api.routes.info import setup_info
 from app.api.routes.health import setup_health
+from app.api.routes.files import setup_files
 from app.homehub import HomeHub
 
 def create_server():
@@ -43,6 +44,10 @@ def create_server():
 
     app.include_router(
         setup_info(hub)
+    )
+
+    app.include_router(
+        setup_files(hub)
     )
 
 

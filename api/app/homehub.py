@@ -3,10 +3,10 @@ from app.registry.service_registry import ServiceRegistry
 from app.core.config import ConfigManager
 from app.core.logger import HomeHubLogger
 from app.core.version import VersionManager
-
 from app.managers.system_manager import SystemManager
 from app.managers.storage_manager import StorageManager
 from app.managers.mqtt_manager import MQTTManager
+from app.managers.file_manager import FileManager
 
 
 class HomeHub:
@@ -31,18 +31,33 @@ class HomeHub:
             self.config
         )
 
+        self.files = FileManager(
+            self.storage
+        )
+
         self.mqtt = MQTTManager(
             self.config
         )
 
         #8  Registrar serviços
         self.registry = ServiceRegistry()
+
         self.registry.register("config", self.config)
+
         self.registry.register("version", self.version)
+
         self.registry.register("logger", self.logger)
+
         self.registry.register("system", self.system)
+
         self.registry.register("mqtt", self.mqtt)
+
         self.registry.register("storage", self.storage)
+        
+        self.registry.register(
+            "files",
+            self.files
+        )
 
         self.doctor = DoctorManager(
             self.registry
