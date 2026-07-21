@@ -1,5 +1,5 @@
 import os
-
+MAX_FILE_SIZE = 100 * 1024 * 1024
 
 class FileManager:
 
@@ -94,6 +94,25 @@ class FileManager:
             filename
         )
 
+        if os.path.exists(destination):
+        
+            return {
+                "status":"ERROR",
+                "message":"File already exists"
+            }
+
+
+        if len(content) > MAX_FILE_SIZE:
+        
+            return {
+        
+                "status":"ERROR",
+        
+                "message":
+                "File too large"
+        
+            }
+
 
         with open(
             destination,
@@ -109,4 +128,44 @@ class FileManager:
 
             "file": filename
 
-        } 
+        }
+
+
+    def delete_file(self, filename):
+
+         path = self.get_file_path(
+             filename
+         )
+
+
+         if not path:
+
+             return False
+
+
+         os.remove(path)
+
+         return True 
+        
+
+    def get_file_path(self, filename):
+
+        base = self.base_path()
+
+        if not base:
+            return None
+
+        base = os.path.abspath(base)
+
+        file_path = os.path.abspath(
+           os.path.join(base,filename)
+        )
+
+        if not file_path.startswith(base + os.sep):
+            return none
+        
+        if os.path.isfile(file_path):
+            return file_path
+
+
+        return None
