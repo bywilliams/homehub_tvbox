@@ -1,169 +1,437 @@
 # Changelog
 
-Histórico de versões do HomeHub Gateway.
+Histórico de versões do **HomeHub Gateway**.
+
+O HomeHub evolui de forma incremental, adicionando novos serviços e módulos para transformar um hardware de baixo custo em uma plataforma local de automação residencial, armazenamento e gerenciamento IoT.
+
 ---
 
 # Próxima versão
 
-# v0.4.1-dev
+# v0.5.0-dev
+
+## Dashboard Web
 
 Planejado:
 
-### Próximos passos
-
-- Interface Web para gerenciamento de arquivos.
-- Upload via navegador.
-- Download via navegador.
-- Gerenciamento visual de pastas.
-- Controle de usuários.
-- Controle de permissões.
+* Criação da interface Web do HomeHub.
+* Dashboard de monitoramento do sistema.
+* Visualização do status dos serviços.
+* Monitoramento do MQTT.
+* Monitoramento do armazenamento.
+* Gerenciamento visual de arquivos.
+* Upload via navegador.
+* Download via navegador.
+* Interface preparada para futuras integrações.
 
 ---
 
 # v0.4.0-dev
 
-## Local Cloud / File Server
+# Local Cloud / File Server
 
-### Adicionado
+## Adicionado
 
-- Implementação inicial do servidor local de arquivos.
-- Criação do `FileManager`.
-- Integração do FileManager ao núcleo HomeHub.
-- Registro do serviço Files no `ServiceRegistry`.
-- Estrutura de armazenamento no SD Card:
+Implementação da primeira versão do armazenamento privado local do HomeHub.
 
+Principais funcionalidades:
 
-### API de Arquivos
+* Criação do `FileManager`.
+* Integração do gerenciamento de arquivos ao núcleo HomeHub.
+* Registro do serviço Files no `ServiceRegistry`.
+* Integração com o armazenamento externo SD Card.
+* Criação da estrutura:
 
-Novos endpoints:
-
-- `GET /api/files`
-  - Informações do serviço de arquivos.
-
-- `GET /api/files/list`
-  - Lista arquivos disponíveis.
-
-- `POST /api/files/upload`
-  - Upload de arquivos.
-
-- `GET /api/files/download/{filename}`
-  - Download de arquivos.
-
-- `DELETE /api/files/{filename}`
-  - Exclusão de arquivos.
-
-
-### Segurança
-
-Implementado:
-
-- Proteção contra Path Traversal.
-- Sanitização dos nomes de arquivos.
-- Restrição de acesso somente ao diretório HomeHub/files.
-- Bloqueio de sobrescrita de arquivos existentes.
-- Limite máximo de upload:
-  - 100 MB por arquivo.
-
-
-### Testes realizados
-
-- Upload via API funcionando.
-- Download via API funcionando.
-- Listagem de arquivos funcionando.
-- Exclusão de arquivos funcionando.
-- Validação de arquivos duplicados funcionando.
-- Teste de segurança contra caminhos externos.
-- Teste de limite de tamanho:
-  - Arquivo de 101 MB rejeitado corretamente.
-
+```
+HomeHub/
+├── files/
+│   ├── documents
+│   ├── images
+│   ├── shared
+│   └── videos
+├── uploads
+├── backups
+├── database
+└── media
+```
 
 ---
 
+## API de Arquivos
+
+Criados novos endpoints REST:
+
+### Informações do serviço
+
+```
+GET /api/files
+```
+
+Retorna informações do serviço de arquivos.
+
+---
+
+### Listagem de arquivos
+
+```
+GET /api/files/list
+```
+
+Permite consultar os arquivos disponíveis no armazenamento local.
+
+---
+
+### Upload
+
+```
+POST /api/files/upload
+```
+
+Permite enviar arquivos para o HomeHub.
+
+Implementado:
+
+* Recepção via `multipart/form-data`.
+* Escrita no armazenamento SD Card.
+* Bloqueio de arquivos duplicados.
+* Validação de tamanho máximo.
+
+---
+
+### Download
+
+```
+GET /api/files/download/{filename}
+```
+
+Permite baixar arquivos armazenados localmente.
+
+Implementado:
+
+* Retorno utilizando `FileResponse`.
+* Controle do caminho dos arquivos.
+* Restrição ao diretório HomeHub.
+
+---
+
+### Exclusão
+
+```
+DELETE /api/files/{filename}
+```
+
+Permite remover arquivos armazenados.
+
+---
+
+## Segurança
+
+Implementado:
+
+* Proteção contra Path Traversal.
+* Restrição dos arquivos ao diretório HomeHub/files.
+* Normalização dos caminhos.
+* Bloqueio de acesso fora do armazenamento permitido.
+* Bloqueio de sobrescrita de arquivos existentes.
+* Limite máximo de upload:
+
+```
+100 MB por arquivo
+```
+
+---
+
+## Testes realizados
+
+Validado:
+
+* Upload via API.
+* Download via API.
+* Listagem de arquivos.
+* Exclusão de arquivos.
+* Bloqueio de arquivos duplicados.
+* Teste contra caminhos externos.
+* Teste de limite de tamanho.
+
+Teste realizado:
+
+```
+Arquivo de 101 MB rejeitado corretamente.
+```
+
+---
 
 # v0.3.1-dev
 
-## Arquitetura e Core
+# Arquitetura e Organização do Core
 
-### Adicionado
+## Adicionado
 
-- Estrutura modular do HomeHub Core.
-- Implementação do `HomeHub` como núcleo central da aplicação.
-- Criação do `ServiceRegistry` para gerenciamento de serviços.
-- Implementação do `ConfigManager` para carregamento das configurações.
-- Implementação do `VersionManager` para controle de versão do software.
-- Implementação do sistema de logs (`HomeHubLogger`).
+Reestruturação completa da arquitetura interna do HomeHub.
 
-### Melhorias
+Implementado:
 
-- Separação entre Core, Managers, API e Schemas.
-- Padronização da arquitetura interna.
-- Organização dos módulos seguindo responsabilidade única.
+* Criação do núcleo central `HomeHub`.
+* Organização modular da aplicação.
+* Separação entre responsabilidades.
+
+Nova estrutura:
+
+```
+core/
+managers/
+services/
+registry/
+schemas/
+api/
+models/
+utils/
+```
+
+---
+
+## Service Registry
+
+Criado:
+
+```
+ServiceRegistry
+```
+
+Responsável pelo gerenciamento dos serviços internos.
+
+Serviços registrados:
+
+* Config.
+* Version.
+* Logger.
+* System.
+* MQTT.
+* Storage.
+* Files.
+* Doctor.
+
+---
+
+## Core Managers
+
+Implementados:
+
+### ConfigManager
+
+Responsável por:
+
+* Carregamento das configurações.
+* Centralização dos parâmetros do sistema.
+
+---
+
+### VersionManager
+
+Responsável por:
+
+* Controle da versão do HomeHub.
+* Informações do software.
+
+---
+
+### HomeHubLogger
+
+Implementado sistema inicial de logs.
+
+---
+
+## Melhorias arquiteturais
+
+Realizado:
+
+* Separação entre Core, Managers, API e Schemas.
+* Padronização dos módulos.
+* Organização seguindo responsabilidade única.
+* Preparação para crescimento futuro.
 
 ---
 
 # v0.3.0-dev
 
-## Gateway API
+# Gateway REST API
 
-### Adicionado
+## Adicionado
 
-- Criação da API REST utilizando FastAPI.
-- Estrutura inicial do servidor HTTP.
-- Rotas:
+Criação da API REST utilizando FastAPI.
 
-  - `/api/system`
-  - `/api/storage`
-  - `/api/mqtt`
-  - `/api/health`
-  - `/api/info`
+Implementado:
 
-- Documentação automática via OpenAPI.
+* Servidor HTTP.
+* Rotas REST.
+* Modelos Pydantic.
+* Documentação automática OpenAPI.
 
-### Schemas
+---
 
-Implementados modelos Pydantic:
+## Endpoints
 
-- SystemInfo
-- MQTTInfo
-- StorageInfo
-- HealthInfo
-- InfoResponse
+Criados:
+
+```
+GET /api/system
+GET /api/storage
+GET /api/mqtt
+GET /api/health
+GET /api/info
+```
+
+---
+
+## Schemas
+
+Implementados:
+
+* `SystemInfo`
+* `MQTTInfo`
+* `StorageInfo`
+* `HealthInfo`
+* `InfoResponse`
+
+---
+
+## Informações fornecidas pela API
+
+Sistema:
+
+* Hardware.
+* Versão.
+* Hostname.
+* Modo de operação.
+
+MQTT:
+
+* Status do broker.
+* Configuração.
+* Porta.
+
+Storage:
+
+* Tipo.
+* Capacidade.
+* Status.
+
+Health:
+
+* Estado geral dos serviços.
 
 ---
 
 # v0.2.0-dev
 
-## Gerenciamento de Serviços
+# Core Services
 
-### Adicionado
+## Adicionado
 
-- MQTT Manager.
-- Storage Manager.
-- Doctor Manager.
+Implementação dos serviços fundamentais do HomeHub.
 
-### MQTT
+Criados:
 
-- Integração com Mosquitto MQTT Broker.
-- Verificação automática:
-  - arquivo de configuração;
-  - processo ativo;
-  - porta 1883 disponível.
+* MQTT Manager.
+* Storage Manager.
+* Doctor Manager.
 
-### Storage
+---
 
-- Suporte inicial ao armazenamento externo.
-- Detecção de SD Card.
-- Estrutura HomeHub Storage:
+# MQTT Manager
 
+Integração com Mosquitto MQTT Broker.
 
+Implementado:
 
+* Verificação do arquivo de configuração.
+* Verificação do processo MQTT.
+* Verificação da porta 1883.
+* Status ONLINE/OFFLINE.
 
-## v0.1.0 (Em desenvolvimento)
+---
 
-### Fase 2
+# Storage Manager
 
-- Inicialização do repositório Git
-- Organização da estrutura do projeto
-- Documentação inicial
-- Preparação do Gateway MQTT
+Implementado:
 
+* Detecção do armazenamento externo.
+* Integração com SD Card.
+* Estrutura inicial do HomeHub Storage.
+
+---
+
+# Doctor Service
+
+Criado sistema de diagnóstico.
+
+Responsável por:
+
+* Verificar serviços registrados.
+* Informar estado geral do Gateway.
+* Auxiliar testes de funcionamento.
+
+---
+
+# v0.1.0
+
+# HomeHub Gateway Foundation
+
+Primeira versão funcional do projeto.
+
+## Adicionado
+
+Fundação inicial do HomeHub.
+
+Implementado:
+
+* Criação do repositório Git.
+* Estrutura inicial do projeto.
+* Organização dos diretórios.
+* Documentação inicial.
+* Preparação do Gateway MQTT.
+
+---
+
+## MQTT Foundation
+
+Implementado:
+
+* Instalação do Mosquitto no Termux.
+* Configuração do broker MQTT.
+* Autenticação por usuário e senha.
+* Persistência MQTT.
+* Testes de publicação e inscrição.
+
+Testado:
+
+```
+mosquitto_pub
+mosquitto_sub
+```
+
+Comunicação MQTT validada.
+
+---
+
+## Hardware inicial
+
+Ambiente:
+
+* TV Box RK3066.
+* Android + Termux.
+* Rede local.
+* Armazenamento SD Card.
+
+---
+
+# Histórico do Projeto
+
+O HomeHub iniciou como um Gateway MQTT utilizando uma TV Box antiga e evoluiu para uma plataforma local contendo:
+
+* Gateway IoT.
+* API REST.
+* Gerenciamento de serviços.
+* Armazenamento local.
+* Base para nuvem privada doméstica.
+* Futuro Dashboard Web.
