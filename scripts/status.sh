@@ -47,12 +47,22 @@ echo ""
 echo "Services:"
 echo ""
 
+
+echo "MQTT:"
+
 if pgrep mosquitto > /dev/null
 then
-    echo "MQTT     ✓ ONLINE"
+    MQTT_PID=$(pgrep mosquitto | head -1)
+
+    echo "✓ ONLINE"
+    echo "PID: $MQTT_PID"
+
 else
-    echo "MQTT     ✗ OFFLINE"
+
+    echo "✗ OFFLINE"
+
 fi
+
 
 echo ""
 
@@ -61,10 +71,113 @@ echo "MQTT Port:"
 if ss -tln | grep 1883 > /dev/null
 then
     echo "1883 ✓ LISTENING"
+
 else
+
     echo "1883 ✗ CLOSED"
+
 fi
 
+
+
+echo ""
+
+echo "API:"
+
+API_PID_FILE="$HOMEHUB/runtime/api.pid"
+
+
+if [ -f "$API_PID_FILE" ]
+then
+
+    API_PID=$(cat "$API_PID_FILE")
+
+
+    if kill -0 $API_PID 2>/dev/null
+    then
+
+        echo "✓ ONLINE"
+        echo "PID: $API_PID"
+
+    else
+
+        echo "✗ OFFLINE"
+
+    fi
+
+else
+
+    echo "✗ OFFLINE"
+
+fi
+
+
+
+echo ""
+
+echo "API Port:"
+
+if ss -tln | grep 8000 > /dev/null
+then
+
+    echo "8000 ✓ LISTENING"
+
+else
+
+    echo "8000 ✗ CLOSED"
+
+fi
+
+
+
+
+echo ""
+
+echo "Dashboard:"
+
+DASH_PID_FILE="$HOMEHUB/runtime/dashboard.pid"
+
+
+if [ -f "$DASH_PID_FILE" ]
+then
+
+    DASH_PID=$(cat "$DASH_PID_FILE")
+
+
+    if kill -0 $DASH_PID 2>/dev/null
+    then
+
+        echo "✓ ONLINE"
+        echo "PID: $DASH_PID"
+
+    else
+
+        echo "✗ OFFLINE"
+
+    fi
+
+else
+
+    echo "✗ OFFLINE"
+
+fi
+
+
+
+echo ""
+
+echo "Dashboard Port:"
+
+if ss -tln | grep 8080 > /dev/null
+then
+
+    echo "8080 ✓ LISTENING"
+
+else
+
+    echo "8080 ✗ CLOSED"
+
+fi
 
 echo ""
 

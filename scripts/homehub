@@ -2,61 +2,104 @@
 
 HOMEHUB="$HOME/Homehub/scripts"
 
+
+show_help(){
+
+echo "================================"
+echo "       HomeHub Gateway"
+echo "================================"
+
+echo ""
+
+echo "Uso:"
+echo ""
+
+echo " homehub start"
+echo " homehub stop"
+echo " homehub restart"
+echo " homehub status"
+echo " homehub logs"
+echo " homehub diagnose"
+echo " homehub info"
+echo " homehub version"
+echo " homehub storage"
+echo " homehub doctor"
+
+echo ""
+
+}
+
+
 case "$1" in
+
 
     start)
         $HOMEHUB/start.sh
         ;;
 
+
     stop)
         $HOMEHUB/stop.sh
         ;;
+
 
     restart)
         $HOMEHUB/restart.sh
         ;;
 
+
     status)
         $HOMEHUB/status.sh
         ;;
+
 
     logs)
         $HOMEHUB/logs.sh
         ;;
 
+
     diagnose)
         $HOMEHUB/diagnose.sh
         ;;
+
 
     info)
         $HOMEHUB/info.sh
         ;;
 
+
     version)
         $HOMEHUB/version.sh
         ;;
+
 
     storage)
         $HOMEHUB/storage.sh
         ;;
 
-   	doctor)
-   	    cd $HOME/Homehub/api
-   	    python doctor.py
-   	    ;;
-    *)
-        echo "HomeHub Gateway"
-        echo ""
-        echo "Uso:"
-        echo ""
-        echo "homehub start"
-        echo "homehub stop"
-        echo "homehub restart"
-        echo "homehub status"
-	echo "homehub logs"
-	echo "homehub info"
-	echo "homehub version"
-	echo "homehub storage"
-	echo "homehub doctor"
+
+    doctor)
+
+        cd "$HOME/Homehub/api"
+
+        python doctor.py
+
         ;;
+
+
+    -h|--help|"")
+        show_help
+        ;;
+
+
+    *)
+
+        echo "Comando desconhecido: $1"
+        echo ""
+
+        show_help
+
+        ;;
+
+
 esac

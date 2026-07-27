@@ -1,6 +1,10 @@
+const  API_BASE = "http://192.168.0.160:8000";
+
 async function apiGet(url) {
 
-    const response = await fetch(url);
+    const response = await fetch(
+		API_BASE + url
+    );
 
     return await response.json();
 
@@ -10,7 +14,7 @@ async function apiGet(url) {
 async function apiPost(url, body) {
 
     const response = await fetch(
-        url,
+    	API_BASE + url,
         {
             method: "POST",
             body: body
@@ -25,7 +29,7 @@ async function apiPost(url, body) {
 async function apiDelete(url) {
 
     const response = await fetch(
-        url,
+        API_BASE + url,
         {
             method: "DELETE"
         }

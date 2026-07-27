@@ -1,6 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
 HOMEHUB="$HOME/Homehub"
+SCRIPTS="$HOMEHUB/scripts"
 LOG="$HOMEHUB/logs/system.log"
 
 echo "================================"
@@ -64,6 +65,18 @@ else
     fi
 
 fi
+
+
+echo ""
+
+echo ""
+
+$SCRIPTS/start_api.sh
+
+
+echo ""
+
+$SCRIPTS/start_dashboard.sh
 
 
 echo ""

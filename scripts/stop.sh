@@ -39,6 +39,16 @@ fi
 
 echo ""
 
+$HOME/Homehub/scripts/stop_api.sh
+
+
+echo ""
+
+$HOME/Homehub/scripts/stop_dashboard.sh
+
+
+echo ""
+
 echo "HomeHub stopped"
 
 echo "================================"
