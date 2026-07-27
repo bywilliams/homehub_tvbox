@@ -1,18 +1,20 @@
+from pathlib import Path
 import logging
-import os
 
 
 class HomeHubLogger:
 
-    def __init__(self):
+    def __init__(self, base_path=None):
 
-        self.log_path = os.path.expanduser(
-            "~/Homehub/logs/homehub.log"
+        self.log_path = (
+            Path(base_path)
+            if base_path
+            else Path.home() / "Homehub" / "logs" / "homehub.log"
         )
 
 
-        os.makedirs(
-            os.path.dirname(self.log_path),
+        self.log_path.parent.mkdir(
+            parents=True,
             exist_ok=True
         )
 

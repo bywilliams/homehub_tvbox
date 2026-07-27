@@ -1,0 +1,9 @@
+listener 1883 0.0.0.0
+
+allow_anonymous false
+
+password_file /caminho/configs/mosquitto/passwd
+
+persistence true
+
+persistence_location /caminho/storage/

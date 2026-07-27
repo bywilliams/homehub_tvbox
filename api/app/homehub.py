@@ -11,8 +11,7 @@ from app.managers.file_manager import FileManager
 
 class HomeHub:
 
-    def __init__(self):
-               
+    def __init__(self):               
         self.config = ConfigManager()
 
         self.logger = HomeHubLogger()
@@ -39,25 +38,25 @@ class HomeHub:
             self.config
         )
 
-        #8  Registrar serviços
+        # Register services
         self.registry = ServiceRegistry()
 
         self.registry.register("config", self.config)
+        
+        self.registry.register("logger", self.logger)
 
         self.registry.register("version", self.version)
 
-        self.registry.register("logger", self.logger)
-
         self.registry.register("system", self.system)
 
-        self.registry.register("mqtt", self.mqtt)
-
         self.registry.register("storage", self.storage)
-        
+
         self.registry.register(
             "files",
             self.files
         )
+
+        self.registry.register("mqtt", self.mqtt)
 
         self.doctor = DoctorManager(
             self.registry
@@ -67,3 +66,5 @@ class HomeHub:
             "doctor",
             self.doctor
         )
+
+        

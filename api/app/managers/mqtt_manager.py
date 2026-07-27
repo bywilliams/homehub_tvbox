@@ -33,7 +33,7 @@ class MQTTManager:
 
             return ":1883" in output
 
-        except Exception:
+        except subprocess.CalledProcessError:
             return False
 
     def info(self):
@@ -46,7 +46,7 @@ class MQTTManager:
             "config": os.path.exists(self.config_file),
             "process": process,
             "port": port,
-            "status": "ONLINE" if process and port else "OFFLINE",
+            "status": "ONLINE" if port else "OFFLINE",
         }
 
     def status(self):

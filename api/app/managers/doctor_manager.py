@@ -61,5 +61,31 @@ class DoctorManager:
             else "ERROR"
         )
 
+        # Files 
+        files = self.registry.get("files")
+        
+        result["files"] = (
+            files.info()["status"]
+            if files
+            else "ERROR"
+        )
+
+        logger = self.registry.get("logger")
+        
+        result["logger"] = (
+            "OK"
+            if logger
+            else "ERROR"
+        )
+
+
+        version = self.registry.get("version")
+        
+        result["version"] = (
+            "OK"
+            if version
+            else "ERROR"
+        )
+
 
         return result

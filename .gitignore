@@ -1,28 +1,73 @@
+# ==========================
 # Banco de dados
+# ==========================
 database/*.db
+*.sqlite
+*.sqlite3
 
+
+# ==========================
 # Logs
+# ==========================
 logs/
-
-# Arquivos temporários
 *.log
-*.tmp
 
-# Dados do Mosquitto
+
+# ==========================
+# Arquivos temporários
+# ==========================
+*.tmp
+*.temp
+
+
+# ==========================
+# Mosquitto MQTT
+# ==========================
 configs/mosquitto/passwd
 configs/mosquitto/*.pid
-
-# Cache
-.cache/
-
-# Arquivos do sistema
-.DS_Store
-Thumbs.db
-
-# MQTT persistence
 storage/mosquitto.db
 
 
-# Python cache
+# ==========================
+# Python
+# ==========================
 __pycache__/
 *.pyc
+venv/
+.venv/
+*/venv/
+
+
+# ==========================
+# Cache
+# ==========================
+.cache/
+
+
+# ==========================
+# Configurações locais
+# ==========================
+configs/*.local
+configs/device.local.conf
+configs/storage.local.conf
+
+
+# ==========================
+# Arquivos dos usuários
+# ==========================
+uploads/
+files/
+storage/HomeHub/
+
+
+# ==========================
+# Editor
+# ==========================
+.vscode/
+
+
+# ==========================
+# Sistema
+# ==========================
+.DS_Store
+Thumbs.db

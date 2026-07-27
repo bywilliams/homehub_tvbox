@@ -72,7 +72,7 @@ def setup_files(homehub):
 
 
     @router.delete(
-        "/api/files/{filename}"
+        "/api/files/{filename:path}"
     )
     def delete(filename: str):
 

@@ -1,20 +1,45 @@
+# Bilioteca padrão
+from pathlib import Path
+
+#terceiros
 from fastapi import FastAPI
-from app.api.routes.system import setup_system
-from app.api.routes.storage import setup_storage
-from app.api.routes.mqtt import setup_mqtt
-from app.api.routes.info import setup_info
-from app.api.routes.health import setup_health
-from app.api.routes.files import setup_files
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+
+# Projeto
 from app.homehub import HomeHub
+from app.api.routes.dashboard import setup_dashboard
+from app.api.routes import register_routes
 
 def create_server():
 
+    hub = HomeHub()
+
     app = FastAPI(
         title="HomeHub Gateway API",
-        version="0.3.0-dev"
+        version=hub.version.info()["version"]
     )
 
-    hub = HomeHub()
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=[
+            "http://192.168.0.159:8080"
+        ],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
+    BASE_DIR = Path(__file__).resolve().parents[2]
+    
+    DASHBOARD_DIR = BASE_DIR / "dashboard"
+
+    app.mount(
+        "/static",
+        StaticFiles(directory=DASHBOARD_DIR),
+        name="dashboard"
+    )
 
 
     @app.get("/")
@@ -22,33 +47,19 @@ def create_server():
 
         return {
             "name": "HomeHub Gateway",
-            "version": "0.3.0-dev",
+            "version": hub.version.info(),
             "status": "online"
         }
 
-    app.include_router(
-        setup_health(hub)
-    )
+    @app.get("/dashboard")
+    def dashboard():
+    
+        return FileResponse(
+            DASHBOARD_DIR / "index.html"
+        )
 
-    app.include_router(
-        setup_system(hub)
-    )
 
-    app.include_router(
-        setup_storage(hub)
-    )   
-
-    app.include_router(
-        setup_mqtt(hub)
-    )
-
-    app.include_router(
-        setup_info(hub)
-    )
-
-    app.include_router(
-        setup_files(hub)
-    )
+    register_routes(app, hub)
 
 
     return app

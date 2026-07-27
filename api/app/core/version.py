@@ -4,32 +4,29 @@ class VersionManager:
 
         self.config = config
 
-        self.version = config.load(
+        self.version_config = config.load(
             "version.conf"
         )
 
 
     def info(self):
 
-        data = self.version["version"]
+        data = self.version_config["version"]
 
-        api_version = "unknown"
-
-        if "api" in self.version:
-            api_version = self.version["api"]["version"]
+        api_version = (
+            self.version_config["api"]["version"]
+            if "api" in self.version_config
+            else "unknown"
+        )
 
         return {
 
-            "software":
-            data["software"],
+            "software": data["software"],
 
-            "version":
-            data["version"],
+            "version": data["version"],
 
-            "mode":
-            data["mode"],
+            "mode": data["mode"],
 
-            "api_version":
-            api_version
+            "api_version": api_version
 
         }

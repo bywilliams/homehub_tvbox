@@ -52,28 +52,25 @@ class StorageManager:
 
 
     def resolve_path(self):
-
+        
+        # Já foi resolvido anteriormente
+        if self.base_path and os.path.exists(self.base_path):
+            return self.base_path
+    
         configured = self.configured_path()
-
-
-        # caminho configurado existe
+    
+        # Caminho configurado existe
         if os.path.exists(configured):
-
             self.base_path = configured
-            return configured
-
-
-        # tenta descobrir automaticamente
-
+            return self.base_path
+    
+        # Tenta descobrir automaticamente
         discovered = self.discover_storage()
-
-
+    
         if discovered:
-
             self.base_path = discovered
-            return discovered
-
-
+            return self.base_path
+    
         return None
 
 

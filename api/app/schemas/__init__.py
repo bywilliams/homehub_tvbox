@@ -3,3 +3,4 @@ from .mqtt import MQTTInfo
 from .storage import StorageInfo
 from .health import HealthInfo
 from .info import InfoResponse
+from .dashboard import DashboardResponse

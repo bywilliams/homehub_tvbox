@@ -6,23 +6,51 @@ O HomeHub evolui de forma incremental, adicionando novos serviços e módulos pa
 
 ---
 
-# Próxima versão
+# HomeHub v0.5.0-dev
 
-# v0.5.0-dev
+## Adicionado
 
-## Dashboard Web
+- Dashboard Web integrada à FastAPI
+- Rota /dashboard
+- API de gerenciamento de arquivos
+- Upload de arquivos
+- Download de arquivos
+- Exclusão de arquivos
+- Listagem detalhada de arquivos
+- Componentes JavaScript reutilizáveis
+- Sistema de alertas Bootstrap
+- Atualização automática do Dashboard
+- Monitoramento de armazenamento
+- Monitoramento MQTT
+- Monitoramento do sistema
+- Descoberta automática do armazenamento
+- Refatoração da arquitetura JavaScript
+- Endpoint /api/dashboard para consolidação dos dados do Gateway
+- Endpoint raiz / com informações do HomeHub Gateway
+- Integração entre Dashboard Web e API REST
+- Monitoramento centralizado dos serviços HomeHub
+- Estrutura preparada para futuras integrações IoT
 
-Planejado:
+## Alterado
 
-* Criação da interface Web do HomeHub.
-* Dashboard de monitoramento do sistema.
-* Visualização do status dos serviços.
-* Monitoramento do MQTT.
-* Monitoramento do armazenamento.
-* Gerenciamento visual de arquivos.
-* Upload via navegador.
-* Download via navegador.
-* Interface preparada para futuras integrações.
+- Dashboard servida diretamente pela FastAPI
+- Organização dos módulos JavaScript
+- Padronização dos componentes visuais
+- Consolidação da arquitetura Core + Managers + API
+- Padronização das respostas JSON da API
+- Melhor integração entre Service Registry e serviços internos
+
+## Corrigido
+
+- Problemas de CORS
+- Caminho do armazenamento
+- Download de arquivos
+- Exclusão segura
+- Navegação da Dashboard
+- Correção definitiva da comunicação Dashboard/API via CORS
+- Correção de carregamento de informações do sistema no Dashboard
+- Ajustes nos caminhos utilizando pathlib
+- Correções de compatibilidade entre módulos após refatoração
 
 ---
 

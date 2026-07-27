@@ -1,25 +1,30 @@
+from pathlib import Path
 import configparser
-import os
+
 
 
 class ConfigManager:
 
-    def __init__(self):
-
-        self.base_path = os.path.expanduser(
-            "~/Homehub/configs"
-        )
+    def __init__(self, base_path=None):
+        
+         self.base_path = (
+            Path(base_path)
+            if base_path
+            else Path.home() / "Homehub" / "configs"
+         )
 
 
     def load(self, filename):
-
+        
+        path = self.base_path / filename
+    
+        if not path.exists():
+            raise FileNotFoundError(
+                f"Configuration  file not found: {path}"
+            )
+    
         config = configparser.ConfigParser()
-
-        path = os.path.join(
-            self.base_path,
-            filename
-        )
-
+    
         config.read(path)
-
+    
         return config
