@@ -1,0 +1,10 @@
+NAME="API"
+DESCRIPTION="HomeHub REST API"
+
+PORT=8000
+
+PID_FILE="runtime/api.pid"
+
+START_SCRIPT="start_api.sh"
+
+STOP_SCRIPT="stop_api.sh"

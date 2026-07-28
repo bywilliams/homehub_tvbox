@@ -41,6 +41,13 @@ fi
 
 echo ""
 
+echo "Starting SSH..."
+
+$SCRIPTS/start_ssh.sh
+
+
+echo ""
+
 echo "Starting MQTT..."
 
 

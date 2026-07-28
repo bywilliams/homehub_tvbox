@@ -48,6 +48,32 @@ echo "Services:"
 echo ""
 
 
+echo "SSH:"
+
+if pgrep -x sshd > /dev/null
+then
+    SSH_PID=$(pgrep -x sshd | head -1)
+
+    echo "✓ ONLINE"
+    echo "PID: $SSH_PID"
+else
+    echo "✗ OFFLINE"
+fi
+
+echo ""
+
+echo "SSH Port:"
+
+if ss -tln | grep 8022 > /dev/null
+then
+    echo "8022 ✓ LISTENING"
+else
+    echo "8022 ✗ CLOSED"
+fi
+
+echo ""
+
+
 echo "MQTT:"
 
 if pgrep mosquitto > /dev/null

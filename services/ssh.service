@@ -1,0 +1,11 @@
+NAME="SSH"
+
+DESCRIPTION="OpenSSH Server"
+
+PORT=8022
+
+PID_NAME="sshd"
+
+START_SCRIPT="start_ssh.sh"
+
+STOP_SCRIPT="stop_ssh.sh"

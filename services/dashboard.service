@@ -1,0 +1,10 @@
+NAME="Dashboard"
+DESCRIPTION="Web Dashboard"
+
+PORT=8080
+
+PID_FILE="runtime/dashboard.pid"
+
+START_SCRIPT="start_dashboard.sh"
+
+STOP_SCRIPT="stop_dashboard.sh"

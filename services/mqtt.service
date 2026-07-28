@@ -1,0 +1,12 @@
+NAME="MQTT"
+DESCRIPTION="Mosquitto Broker"
+
+PORT=1883
+
+PID_NAME=mosquitto
+
+PID_FILE=
+
+START_SCRIPT="start_mqtt.sh"
+
+STOP_SCRIPT="stop_mqtt.sh"

@@ -24,6 +24,7 @@ echo " homehub info"
 echo " homehub version"
 echo " homehub storage"
 echo " homehub doctor"
+echo " homehub boot"
 
 echo ""
 
@@ -85,6 +86,9 @@ case "$1" in
         python doctor.py
 
         ;;
+	boot)
+	    $HOMEHUB/boot.sh
+	    ;;
 
 
     -h|--help|"")
