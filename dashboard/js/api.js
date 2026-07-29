@@ -1,4 +1,4 @@
-const  API_BASE = "http://192.168.0.160:8000";
+const API_BASE = `http://${window.location.hostname}:8000`;
 
 async function apiGet(url) {
 

@@ -6,6 +6,20 @@ O HomeHub evolui de forma incremental, adicionando novos serviços e módulos pa
 
 ---
 
+# HomeHub Gateway
+
+## [0.5.1] - 2026-07-29
+
+### Fixed
+- Corrigido o download de arquivos pela Dashboard.
+- Corrigido o direcionamento do botão de download para a API (porta 8000).
+
+### Changed
+- API_BASE agora utiliza automaticamente o hostname atual.
+- Melhorado o tratamento de caminhos para suportar futuras estruturas de diretórios.
+
+---
+
 # HomeHub v0.5.0-dev
 
 ## Adicionado
@@ -30,6 +44,9 @@ O HomeHub evolui de forma incremental, adicionando novos serviços e módulos pa
 - Integração entre Dashboard Web e API REST
 - Monitoramento centralizado dos serviços HomeHub
 - Estrutura preparada para futuras integrações IoT
+- SSH serviço de integração
+- SSH verificação no boot inicial
+- SSH monitoramento de status
 
 ## Alterado
 
@@ -39,6 +56,8 @@ O HomeHub evolui de forma incremental, adicionando novos serviços e módulos pa
 - Consolidação da arquitetura Core + Managers + API
 - Padronização das respostas JSON da API
 - Melhor integração entre Service Registry e serviços internos
+- Boot Manager agora valida se SSH está disponível
+- HomeHubse sequência de inciialização atualizado
 
 ## Corrigido
 

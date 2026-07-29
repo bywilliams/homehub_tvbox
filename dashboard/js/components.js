@@ -22,6 +22,11 @@ function createStatusBadge(status) {
 // Criar cards
 function createFileCard(file) {
 
+	const downloadPath = file.path
+	    .split("/")
+	    .map(encodeURIComponent)
+	    .join("/");
+
     return `
         <div class="card mb-2 shadow-sm">
 
@@ -48,7 +53,7 @@ function createFileCard(file) {
                 <div class="d-flex gap-2">
 
                     <a
-                        href="/api/files/download/${encodeURIComponent(file.path)}"
+                        href="${API_BASE}/api/files/download/${downloadPath}"
                         class="btn btn-primary btn-sm"
                     >
                         ⬇
